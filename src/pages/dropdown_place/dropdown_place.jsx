@@ -2,7 +2,8 @@ import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Space } from 'antd';
 import React from 'react'
 
-const DropDpowCustom = (props) => {
+const DropDownCustom = (props) => {
+  const Location = props;
     const items = [
         {
           label: <a href="https://www.antgroup.com">1st menu item</a>,
@@ -37,4 +38,4 @@ const DropDpowCustom = (props) => {
   )
 }
 
-export default DropDpowCustom
+export default DropDownCustom

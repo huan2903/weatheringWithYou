@@ -1,8 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
 import ItemSlider from "./slider_comp/item_display";
-import { useState } from "react";
-import ItemSliderSP from "./slider_comp/item_display_spand";
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
@@ -26,7 +24,6 @@ function SamplePrevArrow(props) {
 }
 
 const SliderShow = () => {
-  const [expandItem, setExpandItem] = useState(false);
   const settings = {
     className: "slider variable-width",
     dots: false,

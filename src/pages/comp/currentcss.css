@@ -1,0 +1,53 @@
+.Img-weather{
+    display: flex;
+    justify-content: flex-start;
+    width: 230px;
+    
+}
+.current-temp{
+    display: flex;
+    font-size: 110px;
+    margin-top: 35px;
+    color: white;
+}
+.RowTempIcon{
+    display: flex;
+}
+.main-weather-text{
+    color: white;
+    margin-left: 50px;
+    font-size: 35px;
+    margin-top: 63px;
+    text-align: start;
+}
+.comment{
+    text-align: start;
+    margin-left: 14px;
+    color: white;
+    font-size: large;
+}
+.item-current-weather{
+    background: rgb(0, 255, 255,0.2);
+    display: block;
+    height: 90px;
+
+}
+.row-status-detail{
+    margin-top: 30px;
+}
+.item-detail{
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: start;
+    margin: 5px;
+    font-size: 25px;
+    color: white;
+}
+.item-detail-title{
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: start;
+    margin: 5px;
+    font-size: 15px;
+    color: white;
+}
