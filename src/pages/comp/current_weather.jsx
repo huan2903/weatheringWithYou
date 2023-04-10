@@ -5,15 +5,16 @@ import {
 } from "../../service/apiReq";
 import { Col, Image, Row } from "antd";
 import "../comp/currentcss.css";
-import { F_TEMP } from "../../enum";
+import { F_TEMP, K_TEMP } from "../../enum";
+import { convertTempKToC, convertTempKToF } from "../../utils";
 // import { currentWeather,iconWeather } from "../../service/apiReq";
 function CurrentWeather(props) {
   const location = props.location;
+  const typeOfTemp = props.typeOfTemp
   const [iconWeatherData, setIconWeatherData] = useState("");
   const [currentTemp, setCurrentTemp] = useState();
   const [feellike, setFeelLike] = useState("");
   const [weatherStatus, setWeatherStatus] = useState("");
-  const [tempType, setTempType] = useState(F_TEMP);
   const [detailWeather, setDetailWeather] = useState({
     wind: "",
     humidity: "",
@@ -23,7 +24,7 @@ function CurrentWeather(props) {
   });
   const [evaluateWeatherDi, setEvaluateWeatherDi] = useState();
   const time = new Date();
-  const backgroundStyle = {
+  const [backgroundStyle,setBackgroundStyle] = useState({
     backgroundImage:
       "url(https://c.pxhere.com/photos/6f/47/sky_cloud_blue_blue_sky_cloud_cloud_sky_sky_clouds_sun_day-599259.jpg!d)",
     backgroundSize: "cover",
@@ -32,18 +33,42 @@ function CurrentWeather(props) {
     height: "100%",
     display: "flex",
     justifyContent: "flex-start",
+  })
+
+  const evaluateWeather = (weather) => {
+    if (weather.includes("Clouds")) {
+      setBackgroundStyle({
+        ...backgroundStyle,
+        backgroundImage:" url(https://c.pxhere.com/photos/6f/47/sky_cloud_blue_blue_sky_cloud_cloud_sky_sky_clouds_sun_day-599259.jpg!d)"
+      })
+      return "It's cloudy. The clouds floated by the wind blowing to the far far away sky. ";
+    } else if (weather.includes("rain")){
+      setBackgroundStyle({
+        ...backgroundStyle,
+        backgroundImage:" url(https://th.bing.com/th/id/R.16cd4ca403d78d4d9973b016773ef8be?rik=sFMnJ0WWDNihCw&riu=http%3a%2f%2f4.bp.blogspot.com%2f_3V-U79ZO1zc%2fS4xXRtdLobI%2fAAAAAAAABhU%2fdBnTFrB33NI%2fs400%2fspring%2brain%2brelaxation.jpg&ehk=jwXazeJh7tm5CETn2qTsFvMXwOLOcI926xgaXMv5boQ%3d&risl=&pid=ImgRaw&r=0)"
+      })
+      return "It's rain. We can't go outside camping now T^T."
+    } else if (weather.includes("clear")){
+      setBackgroundStyle({
+        ...backgroundStyle,
+        backgroundImage:" url(https://th.bing.com/th/id/OIP.BVXNP7fkoRKawMvXGszTRgHaE6?pid=ImgDet&rs=1)"
+      })
+      return "It's clear as ur brain when coding more than 180 min."
+    }
+    else {
+      return "Unknown weather";
+    }
   };
 
   useEffect(() => {
     currentWeather(location.lat, location.lon)
       .then((res) => {
-        console.log(res);
         setIconWeatherData(res.data.weather.at(0).icon);
         setCurrentTemp(Math.round(res.data.main.temp));
         setFeelLike(Math.round(res.data.main.feels_like));
         setWeatherStatus(res.data.weather.at(0).main);
         setEvaluateWeatherDi(
-          EvaluateWeather(String(res.data.weather.at(0).main))
+          evaluateWeather(String(res.data.weather.at(0).main))
         );
         setDetailWeather({
           wind: res.data.wind.speed + " km/h",
@@ -54,14 +79,9 @@ function CurrentWeather(props) {
         });
       })
       .catch();
-  }, []);
-  const EvaluateWeather = (weather) => {
-    if (weather.includes("Clouds")) {
-      return "It's cloudy. The clouds floated by the wind blowing to the far far away sky. ";
-    } else {
-      return "Unknown weather";
-    }
-  };
+  }, [location]);
+
+
 
   const weatherImageLink = useMemo(() => {
     return iconWeatherFunc(iconWeatherData);
@@ -117,9 +137,9 @@ function CurrentWeather(props) {
               }}
               src={weatherImageLink}
             />
-            <div className="current-temp">{currentTemp}</div>
+            <div className="current-temp">{typeOfTemp===F_TEMP?convertTempKToF(currentTemp):convertTempKToC(currentTemp)}</div>
             <div className="current-temp" style={{ fontSize: "50px" }}>
-              {tempType}
+              {typeOfTemp}
             </div>
             <div className="main-weather-text">
               <div> {weatherStatus}</div>

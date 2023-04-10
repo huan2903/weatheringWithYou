@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import ItemSlider from "./slider_comp/item_display";
+
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
@@ -23,14 +24,18 @@ function SamplePrevArrow(props) {
   );
 }
 
-const SliderShow = () => {
+const SliderShow = (props) => {
+  const [dayData, setDayData] = useState(props.dayData);
+  const [mapList, setMapList] = useState([]);
+  const tempType = props.typeOfTemp
   const settings = {
     className: "slider variable-width",
     dots: false,
     speed: 500,
-    rows:1,
+    rows: 1,
+    infinite: false,
     slidesToShow: 4,
-    slidesToScroll:4,
+    slidesToScroll: 4,
     initialSlide: 0,
     variableWidth: true,
     nextArrow: <SampleNextArrow />,
@@ -40,7 +45,7 @@ const SliderShow = () => {
         breakpoint: 1670,
         settings: {
           slidesToShow: 2,
-          slidesToScroll:2,
+          slidesToScroll: 2,
           dots: false,
         },
       },
@@ -51,41 +56,23 @@ const SliderShow = () => {
           slidesToScroll: 2,
         },
       },
-
-      
     ],
   };
- 
-  return (
-    <div>
-      <Slider {...settings}>
-      <div style={{width:'520px'}}>
-          <ItemSlider abc={0}/>
-        </div>
-        <div style={{width:'520px'}}>
-          <ItemSlider abc={1}/>
-        </div>
-        <div style={{width:'520px'}}>
-          <ItemSlider abc={2}/>
-        </div>
-        <div style={{width:'520px'}}> 
-          <ItemSlider abc={3}/>
-        </div>
-        <div style={{width:'520px'}}>
-          <ItemSlider abc={4}/>
-        </div>
-        <div style={{width:'520px'}}>
-          <ItemSlider abc={5}/>
-        </div>
-        <div style={{width:'520px'}}>
-          <ItemSlider abc={6}/>
-        </div>
-        <div style={{width:'520px'}}>
-          <ItemSlider abc={7}/>
-        </div>
-      </Slider>
-    </div>
-  );
-};
 
+  useEffect(() => {
+    setDayData(props.dayData);
+  }, [props.dayData]);
+
+  useEffect(() => {
+    setMapList(
+      dayData.map((item) => (
+        <div className="slick-slide" style={{ width: "520px" }}>
+          <ItemSlider type={tempType} item={item} />
+        </div>
+      ))
+    );
+  }, [dayData,tempType,props.dayData]);
+
+  return <div>{dayData ? <Slider {...settings}>{mapList}</Slider> : ""}</div>;
+};
 export default SliderShow;

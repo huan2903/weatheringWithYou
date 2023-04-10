@@ -18,3 +18,14 @@ export const getLocate = async (city) => {
     `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
   );
 };
+export const hourWeather = async (lat, lon) => {
+  return await axios.get(
+    `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`
+  );
+};
+
+export const searchCity = async (city) => {
+  return await axios.get(
+    `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
+  );
+};
