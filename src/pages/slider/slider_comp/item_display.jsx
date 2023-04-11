@@ -1,7 +1,7 @@
 import { Col, Image, Row } from "antd";
 import React from "react";
 import { iconWeatherFunc } from "../../../service/apiReq";
-import {  F_TEMP } from "../../../enum";
+import { F_TEMP } from "../../../enum";
 import { convertTempKToC, convertTempKToF } from "../../../utils";
 
 const ItemSlider = (props) => {
@@ -24,7 +24,8 @@ const ItemSlider = (props) => {
       }}
     >
       <Row>
-        <Col rootClassName="item-date"
+        <Col
+          rootClassName="item-date"
           span={12}
           style={{
             display: "flex",
@@ -60,10 +61,10 @@ const ItemSlider = (props) => {
         </Col>
         <Col span={12} style={{ fontSize: "50px", color: "white" }}>
           <span style={{ display: "flex", marginLeft: "13%" }}>
-          {
-           type===F_TEMP? convertTempKToF(item.main.temp) : convertTempKToC(item.main.temp)
-          }
-             {type}
+            {type === F_TEMP
+              ? convertTempKToF(item.main.temp)
+              : convertTempKToC(item.main.temp)}
+            {type}
           </span>
         </Col>
       </Row>

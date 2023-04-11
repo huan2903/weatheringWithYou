@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import ItemSlider from "./slider_comp/item_display";
 
-function SampleNextArrow(props) {
+const SampleNextArrow = (props) => {
   const { className, style, onClick } = props;
   return (
     <div
@@ -11,9 +11,9 @@ function SampleNextArrow(props) {
       onClick={onClick}
     />
   );
-}
+};
 
-function SamplePrevArrow(props) {
+const SamplePrevArrow = (props) => {
   const { className, style, onClick } = props;
   return (
     <div
@@ -22,12 +22,13 @@ function SamplePrevArrow(props) {
       onClick={onClick}
     />
   );
-}
+};
 
 const SliderShow = (props) => {
   const [dayData, setDayData] = useState(props.dayData);
   const [mapList, setMapList] = useState([]);
-  const tempType = props.typeOfTemp
+  const tempType = props.typeOfTemp;
+
   const settings = {
     className: "slider variable-width",
     dots: false,
@@ -71,7 +72,7 @@ const SliderShow = (props) => {
         </div>
       ))
     );
-  }, [dayData,tempType,props.dayData]);
+  }, [dayData, tempType, props.dayData]);
 
   return <div>{dayData ? <Slider {...settings}>{mapList}</Slider> : ""}</div>;
 };

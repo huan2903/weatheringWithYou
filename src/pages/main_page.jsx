@@ -151,7 +151,11 @@ const MainPage = () => {
       </div>
       <div className="dropdown-place">
         <Row justify={"start"}>
-          <Col rootClassName="dropdown-container" span={5}>
+          <Col
+            ClassName="dropdown-container"
+            style={{ textDecoration: "none", color: "white", fontSize: "25px" }}
+            span={5}
+          >
             {location.name}
           </Col>
         </Row>
