@@ -24,7 +24,7 @@ const ItemSlider = (props) => {
       }}
     >
       <Row>
-        <Col
+        <Col rootClassName="item-date"
           span={12}
           style={{
             display: "flex",
@@ -37,9 +37,9 @@ const ItemSlider = (props) => {
           {convertDate(item.dt)}
         </Col>
         <Col span={12}>
-          <div className="RowTempIcon">
+          <div className="row-temp-icon">
             <Image
-              rootClassName="Img-weather"
+              rootClassName="img-weather"
               style={{
                 display: "flex",
                 width: "170px",

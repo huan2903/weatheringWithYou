@@ -43,5 +43,54 @@
 
 .background{
   background: linear-gradient(#b1bbe9, #3422da);
+}
 
+.search-bar{
+  background-color: dodgerblue
+}
+
+.icon-vui{
+  padding: 30px
+}
+
+.icon-vui-image{
+  width: 70px; 
+  height: 100% 
+}
+
+.switch-button{
+  margin-left: 5px;
+}
+
+.dropdown-place{
+  margin: 30px;
+}
+
+.dropdown-container{
+  text-decoration: none;
+   color: white;
+    font-size:25px;
+}
+
+.current-weather-img-container{
+  height: 500px;
+   background-color:red;
+}
+
+.dropdown-menu{
+  color: white;
+  font-size: "30px";
+  display: "flex";
+  justify-content: "start";
+  margin-top: "20px";
+  margin-left: "9%";
+  margin-bottom: "20px";
+}
+
+.item-date{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: white;
 }

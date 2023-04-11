@@ -1,4 +1,4 @@
-import {  Button, Col, Dropdown, Image,  Row, Space } from "antd";
+import { Button, Col, Dropdown, Image, Row, Space } from "antd";
 import SliderShow from "./slider/slider_show";
 import Search from "antd/es/input/Search";
 import ImageSrc from "./1.png";
@@ -11,28 +11,24 @@ import { C_TEMP, F_TEMP } from "../enum";
 import CurrentWeatherImg from "./comp/current_weather_image";
 
 const MainPage = () => {
+  const [dayData, setDayData] = useState();
+  const [daySelection, setDaySelection] = useState();
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState([]);
+  const [isDone, setIsDone] = useState(false);
   const [tempType, setTempType] = useState(F_TEMP);
+  const [dataWeather, setDataWeather] = useState();
   const [location, setLocation] = useState({
     lat: 21.0294498,
     lon: 105.8544441,
     name: "Ha Noi",
   });
-  const [backgroundStyle,setBackgroundStyle] = useState({
-    backgroundImage:
-      "url(https://c.pxhere.com/photos/6f/47/sky_cloud_blue_blue_sky_cloud_cloud_sky_sky_clouds_sun_day-599259.jpg!d)",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    height: "100%",
-    display: "flex",
-    justifyContent: "flex-start",
-  })
+
   const onSearch = (value) => {
-   
     searchCity(value)
       .then((res) => {
         setDayData();
-        setDaySelection()
+        setDaySelection();
         console.log(res);
         if (res.data) {
           setLocation({
@@ -48,10 +44,7 @@ const MainPage = () => {
         showMessage(false, "city not found!");
       });
   };
-  const [daySelection, setDaySelection] = useState();
-  const [open, setOpen] = useState(false);
-  const [items, setItems] = useState([]);
-  const [isDone,setIsDone] = useState(false)
+
   const renderFiveDaysNext = () => {
     const today = new Date();
     const nextFiveDays = [];
@@ -66,7 +59,7 @@ const MainPage = () => {
     }
     setItems(nextFiveDays);
   };
-  const [dayData, setDayData] = useState();
+
   const weatherOfDay = (index) => {
     let newData = [];
     switch (index) {
@@ -90,58 +83,56 @@ const MainPage = () => {
     }
     setDayData(newData);
   };
-  function handleClickMenuDays(e) {
+
+  const handleClickMenuDays = (e) => {
     setDaySelection(items[e.key].label);
     weatherOfDay(e.key);
     setOpen(false);
-  }
+  };
   const handleOpenChange = (flag) => {
     setOpen(flag);
   };
-  const [dataWeather, setDataWeather] = useState();
+
   const handleClickSwitchTemp = () => {
-    if(tempType===F_TEMP){
-      setTempType(C_TEMP)
-    }else{
-      setTempType(F_TEMP)
+    if (tempType === F_TEMP) {
+      setTempType(C_TEMP);
+    } else {
+      setTempType(F_TEMP);
     }
   };
+
   useEffect(() => {
     renderFiveDaysNext();
     hourWeather(location.lat, location.lon)
       .then((res) => {
-        
         setDataWeather(res.data.list);
       })
       .catch();
-  }, [location.lat, location.lon,isDone]);
+  }, [location.lat, location.lon, isDone]);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
-      position => {
-        setIsDone(true)
+      (position) => {
+        setIsDone(true);
         setLocation({
           ...location,
-          lat:position.coords.latitude
+          lat: position.coords.latitude,
         });
         setLocation({
           ...location,
-          lon:position.coords.longitude
+          lon: position.coords.longitude,
         });
       },
-      error => console.error(error)
+      (error) => console.error(error)
     );
   }, []);
+
   return (
     <div className="background">
-      <div className="searchbar" style={{ backgroundColor: "dodgerblue" }}>
-        <Row justify={"start"} style={{ padding: "30px" }}>
+      <div className="search-bar">
+        <Row className="icon-vui" justify={"start"}>
           <Col span={3}>
-            <Image
-              src={ImageSrc}
-              alt=""
-              style={{ width: "70px", height: "100%" }}
-            />
+            <Image rootClassName="icon-vui-image" src={ImageSrc} alt="" />
           </Col>
 
           <Col span={5} offset={7}>
@@ -154,22 +145,13 @@ const MainPage = () => {
             />
           </Col>
           <Col span={3} offset={6}>
-            <Button
-              style={{ marginLeft: "5px" }}
-              onClick={handleClickSwitchTemp}
-            >
-              {" "}
-              Switch °C/°F
-            </Button>
+            <Button onClick={handleClickSwitchTemp}>Switch °C/°F</Button>
           </Col>
         </Row>
       </div>
-      <div className="dropdown-place" style={{ margin: "30px" }}>
+      <div className="dropdown-place">
         <Row justify={"start"}>
-          <Col
-            span={5}
-            style={{ textDecoration: "none", color: "white", fontSize: "25px" }}
-          >
+          <Col rootClassName="dropdown-container" span={5}>
             {location.name}
           </Col>
         </Row>
@@ -181,13 +163,13 @@ const MainPage = () => {
           </Col>
 
           <Col span={7}>
-            <div style={{ height: "500px", backgroundColor: "red" }}>
-            <CurrentWeatherImg location={location}/>
-              {/* <image src={weatherMap(Math.round(location.lat),Math.round(location.lon))}/> */}
+            <div className="current-weather-img-container">
+              <CurrentWeatherImg location={location} />
             </div>
           </Col>
         </Row>
         <div
+          className="dropdown-menu"
           style={{
             color: "white",
             fontSize: "30px",
@@ -216,7 +198,11 @@ const MainPage = () => {
           </Dropdown>
         </div>
         <div style={{ width: "87.3%", display: "inline-block" }}>
-          {dayData ? <SliderShow typeOfTemp={tempType} dayData={dayData} /> : ""}
+          {dayData ? (
+            <SliderShow typeOfTemp={tempType} dayData={dayData} />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

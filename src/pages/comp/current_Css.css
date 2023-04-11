@@ -1,8 +1,9 @@
-.Img-weather{
+.img-weather{
     display: flex;
     justify-content: flex-start;
     width: 230px;
-    
+    margin-left: 14px;
+    margin-top: 5px;
 }
 .current-temp{
     display: flex;
@@ -10,7 +11,7 @@
     margin-top: 35px;
     color: white;
 }
-.RowTempIcon{
+.row-temp-icon{
     display: flex;
 }
 .main-weather-text{
@@ -50,4 +51,29 @@
     margin: 5px;
     font-size: 15px;
     color: white;
+}
+.container-current-weather{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.content-weather{
+    height: 92%;
+    width: 70%;
+    opacity: 1;
+    padding: 20px
+}
+.title{
+    color: white;
+    opacity: 1;
+    display: flex;
+    font-size: 20px;
+    margin-top: 14px;
+    margin-left: 14px;
+}
+.time-title{
+    color: white;
+    display: flex;
+    margin-left: 14px;
+    margin-top: 5px;
 }
