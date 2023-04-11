@@ -29,3 +29,9 @@ export const searchCity = async (city) => {
     `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
   );
 };
+
+export const weatherMap = (lat,lon) => {
+  const StringWeather = `https://tile.openweathermap.org/map/pressure_new/20/${lat}/${lon}.png?appid=${apiKey}`;
+
+  return StringWeather;
+};

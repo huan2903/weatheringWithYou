@@ -1,7 +1,7 @@
 import { Col, Image, Row } from "antd";
 import React from "react";
 import { iconWeatherFunc } from "../../../service/apiReq";
-import { C_TEMP, F_TEMP, K_TEMP } from "../../../enum";
+import {  F_TEMP } from "../../../enum";
 import { convertTempKToC, convertTempKToF } from "../../../utils";
 
 const ItemSlider = (props) => {

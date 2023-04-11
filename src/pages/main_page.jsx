@@ -1,14 +1,14 @@
-import { Alert, Button, Col, Dropdown, Image, Menu, Row, Space } from "antd";
+import {  Button, Col, Dropdown, Image,  Row, Space } from "antd";
 import SliderShow from "./slider/slider_show";
 import Search from "antd/es/input/Search";
 import ImageSrc from "./1.png";
 import CurrentWeather from "./comp/current_weather";
-import DropDownCustomCustom from "./dropdown_place/dropdown_place";
 import { useEffect, useState } from "react";
-import { DownOutlined, SmileOutlined } from "@ant-design/icons";
-import { hourWeather, searchCity } from "../service/apiReq";
+import { DownOutlined } from "@ant-design/icons";
+import { hourWeather, searchCity, weatherMap } from "../service/apiReq";
 import { showMessage } from "../utils";
-import { C_TEMP, F_TEMP, K_TEMP } from "../enum";
+import { C_TEMP, F_TEMP } from "../enum";
+import CurrentWeatherImg from "./comp/current_weather_image";
 
 const MainPage = () => {
   const [tempType, setTempType] = useState(F_TEMP);
@@ -17,9 +17,22 @@ const MainPage = () => {
     lon: 105.8544441,
     name: "Ha Noi",
   });
+  const [backgroundStyle,setBackgroundStyle] = useState({
+    backgroundImage:
+      "url(https://c.pxhere.com/photos/6f/47/sky_cloud_blue_blue_sky_cloud_cloud_sky_sky_clouds_sun_day-599259.jpg!d)",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    height: "100%",
+    display: "flex",
+    justifyContent: "flex-start",
+  })
   const onSearch = (value) => {
+   
     searchCity(value)
       .then((res) => {
+        setDayData();
+        setDaySelection()
         console.log(res);
         if (res.data) {
           setLocation({
@@ -38,6 +51,7 @@ const MainPage = () => {
   const [daySelection, setDaySelection] = useState();
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]);
+  const [isDone,setIsDone] = useState(false)
   const renderFiveDaysNext = () => {
     const today = new Date();
     const nextFiveDays = [];
@@ -58,7 +72,6 @@ const MainPage = () => {
     switch (index) {
       case "1":
         newData = dataWeather.slice(0, 8);
-
         break;
       case "2":
         newData = dataWeather.slice(8, 16);
@@ -97,13 +110,30 @@ const MainPage = () => {
     renderFiveDaysNext();
     hourWeather(location.lat, location.lon)
       .then((res) => {
+        
         setDataWeather(res.data.list);
       })
       .catch();
-  }, [location.lat, location.lon]);
+  }, [location.lat, location.lon,isDone]);
 
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        setIsDone(true)
+        setLocation({
+          ...location,
+          lat:position.coords.latitude
+        });
+        setLocation({
+          ...location,
+          lon:position.coords.longitude
+        });
+      },
+      error => console.error(error)
+    );
+  }, []);
   return (
-    <div style={{ backgroundColor: "#1f4b8b" }}>
+    <div className="background">
       <div className="searchbar" style={{ backgroundColor: "dodgerblue" }}>
         <Row justify={"start"} style={{ padding: "30px" }}>
           <Col span={3}>
@@ -151,7 +181,10 @@ const MainPage = () => {
           </Col>
 
           <Col span={7}>
-            <div style={{ height: "500px", backgroundColor: "red" }}></div>
+            <div style={{ height: "500px", backgroundColor: "red" }}>
+            <CurrentWeatherImg location={location}/>
+              {/* <image src={weatherMap(Math.round(location.lat),Math.round(location.lon))}/> */}
+            </div>
           </Col>
         </Row>
         <div
