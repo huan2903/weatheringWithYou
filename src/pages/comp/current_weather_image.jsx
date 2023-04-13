@@ -32,6 +32,13 @@ const CurrentWeatherImg = (props) => {
         backgroundImage:
           " url(https://th.bing.com/th/id/OIP.BVXNP7fkoRKawMvXGszTRgHaE6?pid=ImgDet&rs=1)",
       });
+    }
+    else if (weather.includes("Drizzle")) {
+      setBackgroundStyle({
+        ...backgroundStyle,
+        backgroundImage:
+          " url(https://c.wallhere.com/photos/ad/89/boira_niebla_camino_path_tree_fog-762215.jpg!d)",
+      });
     } else {
       return "Unknown weather";
     }
