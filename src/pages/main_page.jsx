@@ -18,10 +18,11 @@ const MainPage = () => {
   const [isDone, setIsDone] = useState(false);
   const [tempType, setTempType] = useState(F_TEMP);
   const [dataWeather, setDataWeather] = useState();
+  const [mounted, setMounted] = useState(false);
   const [location, setLocation] = useState({
-    lat: 21.0294498,
-    lon: 105.8544441,
-    name: "Ha Noi",
+    // lat: 21.0294498,
+    // lon: 105.8544441,
+    // name: "Ha Noi",
   });
 
   const onSearch = (value) => {
@@ -101,31 +102,65 @@ const MainPage = () => {
     }
   };
 
+  // useEffect(() => {
+  //   renderFiveDaysNext();
+
+  //   hourWeather(location.lat, location.lon)
+  //     .then((res) => {
+  //       setDataWeather(res.data.list);
+  //     })
+  //     .catch();
+  // }, [location.lat, location.lon, isDone]);
+
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //       setIsDone(true);
+  //       setLocation({
+  //         ...location,
+  //         lat: position.coords.latitude,
+  //       });
+  //       setLocation({
+  //         ...location,
+  //         lon: position.coords.longitude,
+  //       });
+  //     },
+  //     (error) => console.error(error)
+  //   );
+  // }, []);
+
   useEffect(() => {
-    renderFiveDaysNext();
-    hourWeather(location.lat, location.lon)
-      .then((res) => {
-        setDataWeather(res.data.list);
-      })
-      .catch();
-  }, [location.lat, location.lon, isDone]);
+    if (mounted) {
+      hourWeather(location.lat, location.lon)
+        .then((res) => {
+          setDataWeather(res.data.list);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [location.lat, location.lon, mounted]);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setIsDone(true);
+        console.log(position)
         setLocation({
           ...location,
           lat: position.coords.latitude,
-        });
-        setLocation({
-          ...location,
           lon: position.coords.longitude,
         });
+        setMounted(true);
       },
-      (error) => console.error(error)
+      (error) => console.error(error),
+      { enableHighAccuracy: true }
     );
   }, []);
+
+  useEffect(() => {
+    renderFiveDaysNext();
+  }, [dataWeather]);
 
   return (
     <div className="background">
@@ -156,7 +191,7 @@ const MainPage = () => {
             style={{ textDecoration: "none", color: "white", fontSize: "25px" }}
             span={5}
           >
-            {location.name}
+            {location.name?location.name:"Current location"}
           </Col>
         </Row>
       </div>
