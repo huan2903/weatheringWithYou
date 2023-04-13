@@ -37,6 +37,8 @@ function CurrentWeather(props) {
       return "It's rain. We can't go outside camping now T^T.";
     } else if (weather.includes("clear")) {
       return "It's clear as ur brain when coding more than 180 min.";
+    } else if (weather.includes("drizzle")) {
+      return "It's rain but u still can go outside without raincoat.";
     } else {
       return "Unknown weather";
     }
