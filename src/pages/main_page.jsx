@@ -187,7 +187,7 @@ const MainPage = () => {
       <div className="dropdown-place">
         <Row justify={"start"}>
           <Col
-            ClassName="dropdown-container"
+            className="dropdown-container"
             style={{ textDecoration: "none", color: "white", fontSize: "25px" }}
             span={5}
           >
