@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/weatheringWithYou/static/css/main.57c6dcd5.css",
+    "main.js": "/weatheringWithYou/static/js/main.675e4048.js",
+    "static/js/787.965c1955.chunk.js": "/weatheringWithYou/static/js/787.965c1955.chunk.js",
+    "static/media/1.png": "/weatheringWithYou/static/media/1.09159709cd38f413235d.png",
+    "index.html": "/weatheringWithYou/index.html",
+    "main.57c6dcd5.css.map": "/weatheringWithYou/static/css/main.57c6dcd5.css.map",
+    "main.675e4048.js.map": "/weatheringWithYou/static/js/main.675e4048.js.map",
+    "787.965c1955.chunk.js.map": "/weatheringWithYou/static/js/787.965c1955.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.57c6dcd5.css",
+    "static/js/main.675e4048.js"
+  ]
+}
